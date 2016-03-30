@@ -146,13 +146,13 @@ namespace AssetBundleEditor
 
             //thisSceneData.scene_Lightmap = EditorGUILayout.ObjectField("Scenes LightMap High Texture", thisSceneData.scene_Lightmap, typeof(Texture2D), true, GUILayout.ExpandWidth(true)) as Texture2D;
 
-            if (GUILayout.Button("Create LightMap Asset", GUILayout.ExpandWidth(true)))
-            {
-                thisSceneData.scene_lightmap_asset = m_BundleMgr.CreateLightmap(thisSceneData.scene, Path.GetDirectoryName(AssetDatabase.GetAssetPath(thisSceneData.scene)));
+            //if (GUILayout.Button("Create LightMap Asset", GUILayout.ExpandWidth(true)))
+            //{
+            //    thisSceneData.scene_lightmap_asset = m_BundleMgr.CreateLightmap(thisSceneData.scene, Path.GetDirectoryName(AssetDatabase.GetAssetPath(thisSceneData.scene)));
 
-            }
+            //}
 
-            thisSceneData.scene_lightmap_asset = EditorGUILayout.ObjectField("scene Lightmap Asset", thisSceneData.scene_lightmap_asset, typeof(LightMapAsset), true, GUILayout.ExpandWidth(true)) as LightMapAsset;
+            //thisSceneData.scene_lightmap_asset = EditorGUILayout.ObjectField("scene Lightmap Asset", thisSceneData.scene_lightmap_asset, typeof(LightMapAsset), true, GUILayout.ExpandWidth(true)) as LightMapAsset;
 
             GUILayout.Box("Pack Scene Bundle To(/AssetBunldes/Output/*.*)", GUILayout.ExpandWidth(true));
 

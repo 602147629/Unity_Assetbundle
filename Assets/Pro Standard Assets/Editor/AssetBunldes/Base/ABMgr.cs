@@ -317,7 +317,7 @@ namespace AssetBundleEditor
             AssetDatabase.GetAssetPath((Object)thisSceneData.scene_nav);
             AssetDatabase.GetAssetPath((Object)thisSceneData.scene_Camera_custom);
             //AssetDatabase.GetAssetPath((Object)thisSceneData.scene_Lightmap);
-            AssetDatabase.GetAssetPath((Object)thisSceneData.scene_lightmap_asset);
+            //AssetDatabase.GetAssetPath((Object)thisSceneData.scene_lightmap_asset);
 
 //			string targetPathOld = path + "/" + thisSceneData.scene.name + "_old" + ABConfig.extensionName;
 //                
@@ -339,7 +339,7 @@ namespace AssetBundleEditor
                 SelectedAsset[1] = (Object)thisSceneData.scene_material_asset;
                 SelectedAsset[2] = (Object)thisSceneData.scene_nav;
                 SelectedAsset[3] = (Object)thisSceneData.scene_Camera_custom;
-                SelectedAsset[4] = (Object)thisSceneData.scene_lightmap_asset;
+                //SelectedAsset[4] = (Object)thisSceneData.scene_lightmap_asset;
                 //SelectedAsset[3] = (Object)thisSceneData.scene_Lightmap;
 
 				CreateAssetBunldesALL(SelectedAsset, targetPath, target);
@@ -455,7 +455,7 @@ namespace AssetBundleEditor
         #region 过滤拆分.
         string GetDepencyPath(string name, GameObject obj)
         {
-            Debug.Log("ABMgr GetDepencyPath");
+            //Debug.Log("ABMgr GetDepencyPath");
 
             foreach (string e in sDepencyList)
             {
@@ -468,7 +468,7 @@ namespace AssetBundleEditor
 
                 if (name == abname)
                 {
-                    Debug.Log("ABMgr GetDepencyPath " + name + " is " + e);
+                    //Debug.Log("ABMgr GetDepencyPath " + name + " is " + e);
 
                     return e;
                 }
@@ -498,9 +498,31 @@ namespace AssetBundleEditor
 
             mDestFolder = DestFolder;
 
+            GetLightMpa((GameObject)obj);
+
             GetDepencys(obj);
 
             DecomposeMaterialAsset(obj);
+        }
+
+        void GetLightMpa(Object o)
+        {
+            GameObject obj = (GameObject)PrefabUtility.InstantiatePrefab(o);
+            obj.name = obj.name + "_GetLightMpa";
+
+            ArrayList listLightmaps = new ArrayList();
+
+            Renderer[] rs = obj.GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in rs)
+            {
+                StringPrefabLightmap slmp = new StringPrefabLightmap();
+                slmp.lightmapIndex = r.lightmapIndex;
+                slmp.lightmapScaleOffset = r.lightmapScaleOffset;
+
+                Debug.Log(r.gameObject.name + " " + r.lightmapIndex + " " + r.lightmapScaleOffset);
+
+                listLightmaps.Add(slmp);
+            }
         }
 
         void GetDepencys(Object obj)
@@ -545,9 +567,6 @@ namespace AssetBundleEditor
             //  
             ArrayList listMatNames = new ArrayList();
 			Dictionary<string, int> dicListMatNames = new Dictionary<string, int>();
-
-            //
-            ArrayList listLightmaps = new ArrayList();
 
             GameObject characterClone = (GameObject)Object.Instantiate(obj);
 
@@ -595,15 +614,6 @@ namespace AssetBundleEditor
 									curcount = 1;
 
 								dicListMatNames[prefabmat.assetbundlePath] = curcount;
-
-
-                                //  Lightmap
-                                StringPrefabLightmap lmp = new StringPrefabLightmap();
-                                lmp.lightmapIndex = ren.lightmapIndex;
-                                lmp.lightmapScaleOffset = ren.lightmapScaleOffset;
-
-                                listLightmaps.Add(lmp);
-
                             }
                         }
 
@@ -618,10 +628,28 @@ namespace AssetBundleEditor
             Object o = PrefabUtility.CreateEmptyPrefab(nomaterialscenePath);
             PrefabUtility.ReplacePrefab(characterClone, o);
 
+            //{
+            //    //
+            //    ArrayList listLightmaps = new ArrayList();
+
+            //    Renderer[] rs = characterClone.GetComponentsInChildren<Renderer>();
+            //    foreach (Renderer r in rs)
+            //    {
+            //        StringPrefabLightmap slmp = new StringPrefabLightmap();
+            //        slmp.lightmapIndex = r.lightmapIndex;
+            //        slmp.lightmapScaleOffset = r.lightmapScaleOffset;
+
+            //        Debug.Log(r.gameObject.name + " " + r.lightmapIndex + " " + r.lightmapScaleOffset);
+
+            //        listLightmaps.Add(slmp);
+            //    }
+
+            //}
+
             //  创建配置文件
             StringPrefab holder = ScriptableObject.CreateInstance<StringPrefab>();
             holder.material = (StringPrefabMaterial[])listMatNames.ToArray(typeof(StringPrefabMaterial));
-            holder.lightmap = (StringPrefabLightmap[])listLightmaps.ToArray(typeof(StringPrefabLightmap));
+            //holder.lightmap = (StringPrefabLightmap[])listLightmaps.ToArray(typeof(StringPrefabLightmap));
             string materialassetPath = folder + "/" + obj.name + "_material.asset";
             AssetDatabase.CreateAsset(holder, materialassetPath);
 

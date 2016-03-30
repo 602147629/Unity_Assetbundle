@@ -116,10 +116,12 @@ public class Builder {
 			LightmapParam lmp = r.gameObject.GetComponent<LightmapParam>();
             if(r.lightmapIndex >= 0)
             {
-                if (lmp == null)
-                    lmp = r.gameObject.AddComponent<LightmapParam>();
-                lmp.lightmapIndex = r.lightmapIndex;
-                lmp.lightmapScaleOffset = r.lightmapScaleOffset;
+                Debug.Log(r.gameObject.name + " " + r.lightmapIndex + " " + r.lightmapScaleOffset);
+
+                //if (lmp == null)
+                //    lmp = r.gameObject.AddComponent<LightmapParam>();
+                //lmp.lightmapIndex = r.lightmapIndex;
+                //lmp.lightmapScaleOffset = r.lightmapScaleOffset;
             }
 			else
 			{

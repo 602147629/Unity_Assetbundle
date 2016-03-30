@@ -77,8 +77,8 @@ GetComponent.<Renderer>().material.SetTextureOffset("_Texture1", texture1UV);
 GetComponent.<Renderer>().material.SetTextureOffset("_Texture2", texture2UV);
 GetComponent.<Renderer>().material.SetTextureOffset("_BumpMap1", bumpMap1UV);
 GetComponent.<Renderer>().material.SetTextureOffset("_BumpMap2", bumpMap2UV);
-//GetComponent.<Renderer>().material.SetTextureOffset("_DistortionMap1", distort1UV);
-//GetComponent.<Renderer>().material.SetTextureOffset("_DistortionMap2", distort2UV);
+GetComponent.<Renderer>().material.SetTextureOffset("_DistortionMap1", distort1UV);
+GetComponent.<Renderer>().material.SetTextureOffset("_DistortionMap2", distort2UV);
 
 
 }
